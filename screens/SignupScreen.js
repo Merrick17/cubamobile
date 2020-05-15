@@ -14,7 +14,7 @@ import {Input, theme, Button} from 'galio-framework';
 import {useDispatch} from 'react-redux';
 import {registerUser} from '../store/auth/actions';
 
-const SignupScreen = () => {
+const SignupScreen = props => {
   const [email, setEmail] = useState('');
   const [fullname, setFullName] = useState('');
   const [adr, setAdr] = useState('');
@@ -27,6 +27,13 @@ const SignupScreen = () => {
   const state = useState(state => state);
   return (
     <View style={GlobalStyles.maincreen}>
+      <Spinner
+        visible={state.spinnerReducer}
+        textContent={'Veuillez Patienter...'}
+        textStyle={{
+          color: '#FFF',
+        }}
+      />
       <ScrollView>
         <Image
           source={require('../assets/imgs/thumbnail.png')}
