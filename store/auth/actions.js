@@ -60,19 +60,22 @@ export const registerUser = (user, navigation) => {
         body: JSON.stringify(user),
       });
       let responseJson = await response.json();
-      if (responseJson.token != undefined && responseJson.token != null) {
+      console.log('My Response', responseJson);
+      if (responseJson.user != undefined && responseJson.user != null) {
         console.log(responseJson);
-        saveItem('token', responseJson.token);
-        saveItem('userId', responseJson.user._id);
-        saveItem('cart', responseJson.user.cart);
-        dispatch(loginUser(responseJson.user));
+
         dispatch(hideSpinner());
-        navigation.replace('Main');
+        Alert.alert(
+          'Success',
+          'Inscription reussite veuillez connecter ',
+          [{text: 'OK', onPress: () => navigation.replace('Login')}],
+          {cancelable: false},
+        );
       } else {
         dispatch(hideSpinner());
         Alert.alert(
           'Erreur',
-          'Email ou mot de passe incorrect',
+          "Erreur d'inscription",
           [{text: 'OK', onPress: () => console.log('OK Pressed')}],
           {cancelable: false},
         );

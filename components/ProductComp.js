@@ -33,6 +33,7 @@ const ProductComp = props => {
               productName: props.Name,
               unitPrice: props.Price.toFixed(3),
               totalPrice: props.Price.toFixed(3),
+              id: props.id,
             }),
           );
         }}>
