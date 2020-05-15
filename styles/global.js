@@ -219,6 +219,14 @@ export const GlobalStyles = StyleSheet.create({
     //marginRight: 30,
     fontFamily: 'poppins_medium',
     color: 'black',
+  },
+  errorLabel: {
+    alignSelf: 'flex-start',
+    //marginVertical: 2,
+    //fontSize:10,
+    //marginRight: 30,
+    fontFamily: 'poppins_medium',
+    color: 'red',
   }, //
   label2: {
     alignSelf: 'center',

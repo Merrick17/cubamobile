@@ -6,6 +6,7 @@ import {productsReducer} from '../store/products/index';
 import {RoutingReducer} from '../store/productRoute/index';
 import {SelectedCateg} from '../store/selectedCategory/index';
 import {CustomModal} from '../store/customModal/index';
+import {spinnerReducer} from '../store/spinner/index';
 export default combineReducers({
   authReducer,
   newproductsReducer,
@@ -14,4 +15,5 @@ export default combineReducers({
   RoutingReducer,
   SelectedCateg,
   CustomModal,
+  spinnerReducer,
 });

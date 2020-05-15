@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,10 +9,25 @@ import {
 } from 'react-native';
 import {GlobalStyles} from '../styles/global';
 import {Input, theme, Button} from 'galio-framework';
-
+import {useDispatch, useSelector} from 'react-redux';
+import {authUser} from '../store/auth/actions';
+import {showSpinner} from '../store/spinner/actions';
+import Spinner from 'react-native-loading-spinner-overlay';
 const LoginScreen = props => {
+  const dispatch = useDispatch();
+  const state = useSelector(state => state);
+  const [email, setEmail] = useState('');
+  const [psw, setPass] = useState('');
+  const [showError, setShowError] = useState(false);
   return (
     <View style={GlobalStyles.maincreen}>
+      <Spinner
+        visible={state.spinnerReducer}
+        textContent={'Veuillez Patienter...'}
+        textStyle={{
+          color: '#FFF',
+        }}
+      />
       <Image
         source={require('../assets/imgs/thumbnail.png')}
         style={{height: 150, width: 220, alignSelf: 'center', marginTop: 20}}
@@ -26,7 +41,22 @@ const LoginScreen = props => {
             style={GlobalStyles.inputItem}
             bgColor={'#EEEEEE'}
             borderless={true}
+            onChangeText={text => {
+              setEmail(text);
+              let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+              if (reg.test(email) === false) {
+                setShowError(true);
+              } else {
+                setShowError(false);
+              }
+            }}
+            value={email}
           />
+
+          <Text style={GlobalStyles.errorLabel}>
+            {showError ? 'Veuillez saisir une adresse email valide' : ''}
+          </Text>
+
           <Text style={GlobalStyles.InputLabel}>Mot de passe</Text>
           <Input
             placeholder="**************"
@@ -35,12 +65,22 @@ const LoginScreen = props => {
             borderless={true}
             password
             viewPass
+            value={psw}
+            onChangeText={text => {
+              setPass(text);
+            }}
           />
           <Button
             color="#0C16DB"
             style={GlobalStyles.BtnStyle}
             onPress={() => {
-              props.navigation.replace('Main');
+              //props.navigation.replace('Main');
+              let user = {
+                email: email.trim(),
+                password: psw,
+              };
+              dispatch(showSpinner());
+              dispatch(authUser(user, props.navigation));
             }}>
             <Text
               style={{
